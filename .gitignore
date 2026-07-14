@@ -1,0 +1,24 @@
+# Build and runtime output
+build/
+data/
+dist/
+Documentation_papers/
+native/
+
+# IDE and local workspace files
+.vscode/
+.idea/
+*.code-workspace
+
+# Java build artifacts
+*.class
+*.jar
+*.log
+
+# Local configuration
+app/config/config.properties
+dist/config.properties
+
+# OS and tool caches
+.DS_Store
+Thumbs.db

@@ -1,0 +1,98 @@
+# =====================================================
+# Face Recognition Attendance System - Configuration
+# EXAMPLE TEMPLATE - Copy to config.properties and fill in your values
+# =====================================================
+
+# ⚠️ SECURITY NOTICE:
+# DO NOT commit config.properties with real credentials to version control!
+# This file (config.properties.example) is safe to commit.
+# Copy this file to config.properties and replace placeholder values.
+
+# ======= DATABASE CONFIGURATION =======
+# SQL Server Settings
+db.server=localhost
+db.instance=SQLEXPRESS
+db.port=1433
+db.name=FaceAttendanceDB
+db.username=sa
+# ⚠️ REPLACE WITH YOUR ACTUAL PASSWORD (use strong password)
+db.password=YOUR_PASSWORD_HERE
+
+# Remote demo examples:
+# If DB is on another PC, set db.server to that machine IP, for example:
+# db.server=192.168.1.50
+#
+# Option A (instance mode): keep db.instance=SQLEXPRESS
+# Option B (port mode, recommended): set db.instance= and use db.port=1433
+
+# SQL Server Security Options
+db.trustCert=true
+db.integratedSecurity=false
+
+# H2 Embedded Database (alternative to SQL Server)
+# db.driver=h2
+# db.url=jdbc:h2:./data/attendance
+# db.user=admin
+# db.password=admin
+
+# ======= APPLICATION SETTINGS =======
+app.name=Face Recognition Attendance System
+app.version=1.0.0
+app.title.window=Face Recognition Attendance System
+app.theme=light
+
+# ======= CAMERA CONFIGURATION =======
+# Camera index: 0 = built-in, 1 = first USB camera, etc.
+camera.index=0
+camera.width=640
+camera.height=480
+camera.fps=30
+
+# ======= FACE DETECTION SETTINGS =======
+# Scale Factor: Lower = more sensitive but slower (1.05-1.3)
+face.detection.scale=1.1
+# Minimum Neighbors: Higher = fewer false positives (3-10)
+face.detection.neighbors=3
+# Minimum face size
+face.min.size=30
+# Maximum face size
+face.max.size=200
+# Confidence threshold for face matching (0-1)
+face.confidence.threshold=0.7
+
+# ======= ATTENDANCE SETTINGS =======
+# Present window (HH:MM format). Between start and end => PRESENT, else => LATE
+attendance.present.start.time=09:30
+attendance.present.end.time=10:10
+# Legacy key (kept for backward compatibility)
+attendance.late.time=09:30
+# Mark "Present" if matched in window, otherwise "Late"
+attendance.present.status=Present
+attendance.late.status=Late
+attendance.absent.status=Absent
+
+# ======= SECURITY SETTINGS =======
+# OTP validity in minutes
+otp.validity.minutes=5
+# Maximum login attempts before lockout
+login.max.attempts=5
+# Lockout duration in minutes
+login.lockout.minutes=15
+
+# ======= FILE PATHS =======
+# Directory for storing face data
+face.data.directory=data/face_data/
+# Log file path
+log.file.path=data/logs/app.log
+
+# ======= GUI CONFIGURATION =======
+window.width=1200
+window.height=700
+camera.window.width=900
+camera.window.height=700
+
+# UI Colors (hex format)
+color.primary=#3498db
+color.success=#27ae60
+color.error=#e74c3c
+color.warning=#f39c12
