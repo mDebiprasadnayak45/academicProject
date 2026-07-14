@@ -1,27 +1,49 @@
 # Face Recognition Attendance System
 
-## Prerequisites
-- Java JDK 11 or higher (https://adoptopenjdk.net/ or https://jdk.java.net/)
-- No need to install JavaFX or OpenCV separately (included in project resources)
+Face Recognition based Attendance System
 
-## Folder Structure
-- `app/` - Source code and resources
-- `build/` - Compiled classes and runtime resources
-- `scripts/` - Build and run scripts for Windows/Linux/Mac
-- `data/` - Database, face data, logs
+A Java desktop application for face-based attendance tracking, user management, and leave handling. The project combines JavaFX UI, OpenCV/JavaCV face detection, and SQL Server connectivity for a practical attendance workflow that can be demonstrated locally or over a network.
 
-## How to Build and Run
+## Highlights
 
-### On Windows
+- Face recognition-based attendance capture
+- Role-based user management for admin, teacher, and student workflows
+- Leave request and attendance reporting support
+- CSV export for reports
+- Secure login flow with optional OTP support
+- Bundled JavaFX, OpenCV, and JavaCV dependencies for easier setup
+
+## Tech Stack
+
+- Java 11+
+- JavaFX
+- OpenCV / JavaCV
+- SQL Server
+- Batch and shell scripts for build and run automation
+
+## Project Structure
+
+- `app/src/` - Java source code
+- `app/resources/` - Cascade files and application resources
+- `app/config/` - Local and example configuration
+- `scripts/` - Build and run scripts
+- `data/` - Local data, logs, and runtime storage
+
+## Run the Project
+
+### Windows
+
 1. Open Command Prompt in the project folder.
 2. Run:
    ```
    scripts\build.bat
    scripts\run.bat
    ```
-3. Visual C++ runtime is bundled in `dist/runtime/vc` (vcruntime140.dll, vcruntime140_1.dll, msvcp140.dll), so the receiver typically does not need separate VC++ installation.
 
-### On Linux/Mac
+The required Visual C++ runtime is already bundled in the project distribution, so a separate install is usually not needed.
+
+### Linux or macOS
+
 1. Open Terminal in the project folder.
 2. Run:
    ```
@@ -29,62 +51,46 @@
    bash scripts/run.sh
    ```
 
-## Features
-- Face recognition-based attendance
-- User management (admin/teacher/student)
-- Leave management
-- Attendance and leave reports
-- Export reports as CSV
-- Secure login (password + optional OTP)
+## Configuration
 
-## Notes
-- All dependencies (JavaFX, JavaCV, OpenCV) are included in the `resources` folder.
-- If you encounter errors about missing JavaFX or OpenCV, check the `jpackage-input/javafx-sdk-*` and `javacv-platform-*` folders are present.
-- Database is file-based and included in `data/attendance_h2/`.
+Use [app/config/config.properties](app/config/config.properties) for local development, or the generated [dist/config.properties](dist/config.properties) after build.
 
-## Troubleshooting
-- Make sure Java is installed and added to your PATH.
-- If you see errors about missing libraries, ensure you are running the scripts from the project root.
-- For any issues, check the logs in `data/logs/`.
+Typical SQL Server settings:
 
-## Two-PC Viva Setup (Your PC = DB Server, Friend PC = App Client)
-
-Use this setup when you want to show examiner that one machine hosts DB and another uses the app.
-
-### 1. Prepare SQL Server on Your PC (Server Machine)
-1. Keep your database with existing data in SQL Server (for example `FaceAttendanceDB`).
-2. In SQL Server Configuration Manager:
-    - Enable `TCP/IP` for your SQL instance.
-    - Restart SQL Server service.
-3. Open Windows Firewall inbound rule for SQL Server port (`1433`) and SQL Browser (`UDP 1434`) if needed.
-4. Find your server machine IPv4 address using `ipconfig`.
-
-### 2. Configure App on Friend PC (Client Machine)
-Edit [app/config/config.properties](app/config/config.properties) (or [dist/config.properties](dist/config.properties) after build) and set:
-
-- `db.server=<YOUR_SERVER_PC_IP>`
+- `db.server=<your-server-ip-or-hostname>`
 - `db.name=FaceAttendanceDB`
 - `db.username=sa`
-- `db.password=<your_sql_password>`
+- `db.password=<your-password>`
 
-Choose one connection mode:
+Choose one connection style:
 
-- Instance mode (if SQL Browser is available):
-   - `db.instance=SQLEXPRESS`
-- Port mode (recommended for reliable viva demo):
-   - `db.instance=` (leave empty)
-   - `db.port=1433`
+- Instance mode: `db.instance=SQLEXPRESS`
+- Port mode: leave `db.instance` empty and set `db.port=1433`
 
-### 3. Run Demo
-1. On your server PC, keep SQL Server running.
-2. On friend PC, run:
-    - `scripts\build.bat`
-    - `scripts\run.bat`
-3. Any new attendance/users inserted from friend PC are stored in your server PC database.
+## Two-PC Demo Setup
 
-### 4. Quick Connectivity Check
-- From friend PC PowerShell: `Test-NetConnection <SERVER_IP> -Port 1433`
-- If failed, recheck firewall, SQL TCP/IP, and server IP.
+This project supports a simple viva/demo setup where one machine hosts SQL Server and another machine runs the app.
 
----
-For questions or help, contact the project maintainer.
+1. Enable TCP/IP for the SQL Server instance on the host machine.
+2. Open firewall access for the SQL port you are using.
+3. Set `db.server` in the client configuration to the host machine IP address.
+4. Start the app from the client machine using the normal run script.
+
+Quick network check from the client machine:
+
+```powershell
+Test-NetConnection <SERVER_IP> -Port 1433
+```
+
+## Notes
+
+- The repository is intentionally kept free of generated build output and local machine files.
+- If you are sharing this project publicly, update the configuration file with non-sensitive example values only.
+- Screenshots can be added later in the README if you want a stronger portfolio presentation.
+
+## Troubleshooting
+
+- Confirm that Java is installed and available in your PATH.
+- Run the scripts from the project root so relative paths resolve correctly.
+- If database connection fails, verify the SQL Server host, instance name, port, and firewall rules.
+- Check the log files in `data/logs/` when debugging runtime issues.
